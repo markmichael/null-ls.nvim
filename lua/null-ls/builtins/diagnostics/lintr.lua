@@ -19,6 +19,11 @@ local handle_lintr_output = function(params)
     })
     local offenses = {}
     for _, offense in ipairs(params.output) do
+        if #offense.ranges == 0 then
+            offense.ranges = {
+                {1,1}
+            }
+        end
         table.insert(offenses, {
             line = offense.line_number,
             column = offense.ranges[1][1],
