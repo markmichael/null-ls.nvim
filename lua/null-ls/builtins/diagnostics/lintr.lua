@@ -24,14 +24,23 @@ local handle_lintr_output = function(params)
                 {1,1}
             }
         end
-        table.insert(offenses, {
-            line = offense.line_number,
-            column = offense.ranges[1][1],
-            level = offense.type,
-            message = offense.message,
-            endColumn = offense.ranges[1][2],
-            filename = offense.filename,
+        if offense.ranges[1][2] == "NA" then
+            table.insert(offenses, {
+                line = offense.line_number,
+                column = offense.ranges[1][1],
+                level = offense.type,
+                message = offense.message,
+                filename = offense.filename,})
+        else
+            table.insert(offenses, {
+                line = offense.line_number,
+                column = offense.ranges[1][1],
+                level = offense.type,
+                message = offense.message,
+                endColumn = offense.ranges[1][2],
+                filename = offense.filename,
         })
+        end
     end
     return parser({ output = offenses })
 end
