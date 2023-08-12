@@ -10,7 +10,7 @@ return h.make_builtin({
         description = "Non-invasive pretty printing of R code.",
     },
     method = FORMATTING,
-    filetypes = { "r", "rmd" },
+    filetypes = { "r", "rmd", "qmd", "quarto" },
     generator_opts = {
         command = "R",
         args = function(params)
@@ -29,7 +29,7 @@ return h.make_builtin({
                 string.format(
                     [[options(styler.quiet = TRUE)
                           con = file("stdin")
-                          temp = tempfile("styler",fileext = ".%s")
+                          temp = tempfile("styler",fileext = ".$FILEEXT")
                           writeLines(readLines(con), temp)
                           styler::style_file(temp)
                           cat(paste0(readLines(temp), collapse = '\n'))
